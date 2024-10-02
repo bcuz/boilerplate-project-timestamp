@@ -17,14 +17,28 @@ app.get("/", function (req, res) {
 
 app.get("/api/:date?", function (req, res) {
   const date = req.params.date;
-  if (date) {
-    res.send(`Date provided: ${date}`);
+
+  // if it's a utc num. if a num
+
+  // new Date(1451001600000);
+  // console.log(typeof date)
+
+  if (parseInt(date)) {
+    let parsedDate = parseInt(date)
+    let utc_date = new Date(parsedDate).toUTCString()
+
+    res.json({unix: parsedDate, utc: utc_date })
   } else {
+    // l: might be an issue with this date being an obj
     res.json({unix: Date.now()});
   }
 });
 
+// desired
+// Thu, 01 Jan 1970 00:00:00 GMT
+// Wed, 02 Oct 2024 15:37:27 GMT
 
+// Wed Oct 02 2024 11:33:04 GMT-0400 (Eastern Daylight Time)
 
 // Listen on port set in environment variable or default to 3000
 var listener = app.listen(process.env.PORT || 3000, function () {
