@@ -31,8 +31,12 @@ app.get("/api/:date?", function (req, res) {
   // convert a date in this format 2015-12-25 to unix milliseconds
   // new Date('2015-12-25').getTime()
 
+  // code to convert unix timestampt to Date and Time Components
+  // 1672531199000 -> 2023, 9, 5, 10, 30, 0, 0
+  // new Date(1672531199000).toString()
+
   // if desired date format
-  if (dateRegex.test(date)) {
+  if (Date.parse(date)) {
     res.json({unix: new Date(date).getTime(), utc: new Date(date).toUTCString() })
 
     // if a pure num
