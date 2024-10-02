@@ -17,25 +17,10 @@ app.get("/", function (req, res) {
 
 app.get("/api/:date?", function (req, res) {
   const date = req.params.date;
-  // valid date format
-  // regex? 
-
-  // write regex to return true if string matches this format 2015-12-25
-  // regex for date format yyyy-mm-dd
-  const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
   const numRegex = /^\d+$/;
 
-  // create a date object given a string in this format 2015-12-25
-  // new Date('2015-12-25').toUTCString()
-
-  // convert a date in this format 2015-12-25 to unix milliseconds
-  // new Date('2015-12-25').getTime()
-
-  // code to convert unix timestampt to Date and Time Components
-  // 1672531199000 -> 2023, 9, 5, 10, 30, 0, 0
-  // new Date(1672531199000).toString()
-
-  // if desired date format
+  // if Date.parse works
+  // dont fully grok it, but millisec doesnt go through
   if (Date.parse(date)) {
     res.json({unix: new Date(date).getTime(), utc: new Date(date).toUTCString() })
 
@@ -46,7 +31,6 @@ app.get("/api/:date?", function (req, res) {
 
     res.json({unix: parsedDate, utc: utc_date })
   } else if (!date) {
-    // l: might be an issue with this date being an obj
     let now = Date.now()
 
     res.json({unix: Date.now(), utc: new Date(now).toUTCString()});
