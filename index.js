@@ -17,27 +17,31 @@ app.get("/", function (req, res) {
 
 app.get("/api/:date?", function (req, res) {
   const date = req.params.date;
-
   // valid date format
   // regex? 
 
   // write regex to return true if string matches this format 2015-12-25
   // regex for date format yyyy-mm-dd
   const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+  const numRegex = /^\d+$/;
 
+  // if desired date format
   if (dateRegex.test(date)) {
     res.send('yes')
 
-  } else if (parseInt(date)) {
+    // if a pure num
+  } else if (numRegex.test(date)) {
     let parsedDate = parseInt(date)
     let utc_date = new Date(parsedDate).toUTCString()
 
     res.json({unix: parsedDate, utc: utc_date })
-  } else if (date === '') {
+  } else if (!date) {
     // l: might be an issue with this date being an obj
     let now = Date.now()
 
     res.json({unix: Date.now(), utc: new Date(now).toUTCString()});
+  } else {
+    res.send('next')
   }
 });
 
