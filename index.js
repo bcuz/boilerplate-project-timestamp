@@ -25,7 +25,9 @@ app.get("/api/:date?", function (req, res) {
     res.json({unix: parsedDate, utc: utc_date })
   } else {
     // l: might be an issue with this date being an obj
-    res.json({unix: Date.now()});
+    let now = Date.now()
+
+    res.json({unix: Date.now(), utc: new Date(now).toUTCString()});
   }
 });
 
