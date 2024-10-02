@@ -25,9 +25,15 @@ app.get("/api/:date?", function (req, res) {
   const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
   const numRegex = /^\d+$/;
 
+  // create a date object given a string in this format 2015-12-25
+  // new Date('2015-12-25').toUTCString()
+
+  // convert a date in this format 2015-12-25 to unix milliseconds
+  // new Date('2015-12-25').getTime()
+
   // if desired date format
   if (dateRegex.test(date)) {
-    res.send('yes')
+    res.json({unix: new Date(date).getTime(), utc: new Date(date).toUTCString() })
 
     // if a pure num
   } else if (numRegex.test(date)) {
@@ -41,7 +47,7 @@ app.get("/api/:date?", function (req, res) {
 
     res.json({unix: Date.now(), utc: new Date(now).toUTCString()});
   } else {
-    res.send('next')
+    res.json({error: "Invalid Date"})
   }
 });
 
